@@ -15,7 +15,7 @@ class LoginForm extends Component {
         if(isUser){
             this.setError("Username is already exists")
         } else{
-            this.props.setUser(user)
+            this.props.setUser(user);
             this.setError("")
         }
 };
@@ -36,7 +36,6 @@ class LoginForm extends Component {
     setError = (error) =>{
         this.setState({error})
     };
-
 
     render() {
         const{nickname, error} = this.state;
