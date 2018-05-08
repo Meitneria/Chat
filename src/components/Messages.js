@@ -21,11 +21,25 @@ export default class Messages extends Component {
     }
 
     render() {
-        const { messages, user, typingUsers } = this.props;
+        const { messages, user, typingUsers, data } = this.props;
         return (
             <div ref='container'
                  className="thread-container">
+
                 <div className="thread">
+                    <div>{data.map((data)=>{
+                        return( <div
+                                key={data._id}
+                                className={`message-container ${data.sender === user.name && 'right'}`}
+                            >
+                                <div className="time">{data.date}</div>
+                                <div className="data">
+                                    <div className="message">{data.message}</div>
+                                    <div className="name">{data.sender}</div>
+                                </div>
+                            </div>
+                        )
+                    })}</div>
                     {
                         messages.map((mes)=>{
                             return (
@@ -53,8 +67,6 @@ export default class Messages extends Component {
                         })
                     }
                 </div>
-
-
             </div>
         );
     }

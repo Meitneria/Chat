@@ -124,6 +124,7 @@ export default class ChatContainer extends Component {
                                         messages={activeChat.messages}
                                         user={user}
                                         typingUsers={activeChat.typingUsers}
+                                        data = {this.props.data}
                                     />
                                     <MessageInput
                                         sendMessage={
@@ -136,6 +137,7 @@ export default class ChatContainer extends Component {
                                                 this.sendTyping(activeChat.id, isTyping)
                                             }
                                         }
+                                        user={user}
                                     />
 
                                 </div>

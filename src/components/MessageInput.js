@@ -7,23 +7,37 @@ export default class MessageInput extends Component {
 
         this.state = {
             message:"",
+            user:"",
+
             isTyping:false
         };
-
     }
 
     handleSubmit = (e)=>{
         e.preventDefault();
         this.sendMessage();
-        this.setState({message:""})
+        let {message, user} = this.state;
+        const {userName} = this.props.user.name;
+        user = userName;
+        console.log(message);
+        console.log(user);
+        fetch('http://localhost:3231/api/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify( {message, user} ),
+        })
+            .then(res => res.json())
+            .then(res => {
+           if (!res.success) return this.setState({ error: res.error.message || res.error });
+            this.setState({ message:'', user:""});
+        });
     };
 
     sendMessage = ()=>{
         this.props.sendMessage(this.state.message)
-
     };
 
-    componentWillUnmount() {
+    componentWillUnmount(){
         this.stopCheckingTyping()
     }
 

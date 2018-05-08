@@ -6,6 +6,10 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Message = require('../model/Messages');
 var Users = require('../model/Users');
+var cors = require('cors');
+
+
+app.use(cors());
 
 var server = require('http').Server(app);
 var io = module.exports.io = require('socket.io')(server);
@@ -31,23 +35,24 @@ res.json({ message: 'API Initialized!'});
 });
 
 router.route('/messages')
-    .get(function(req, res) {
-        Message.find(function(err, comments) {
+    .get((req, res)=> {
+        Message.find((err, messages)=> {
             if (err)
-                res.send(err);
-            res.json(comments)
+                return res.json({success: false, error: err});
+           return res.json( messages )
         });
     })
 
-    .post(function(req, res) {
-        var message = new Message();
+    .post((req, res)=> {
+        const message = new Message();
         //body parser lets us use the req.body
-        message.author = req.body.author;
-        message.text = req.body.text;
-        message.save(function(err) {
-            if (err)
-                res.send(err);
-            res.json({ message: 'Message successfully added!' });
+        message.sender = req.body.sender;
+        message.message = req.body.message;
+        message.date = req.body.date;
+
+        message.save((err)=> {
+            if (err) return res.send({ success: false, error: err });
+            return res.json({ success: true, message: 'Message successfully added!' });
         });
     });
 app.use('/api', router);

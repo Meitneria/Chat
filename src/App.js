@@ -3,11 +3,13 @@ import Layout from './components/Layout';
 import './styles.css';
 
 class App extends Component {
+
   render() {
     return (
       <div className="container">
-        <Layout title="Chat" />
-
+        <Layout title="Chat"
+                url='http://localhost:3231/api/messages'
+                pollInterval={2000}/>
       </div>
     );
   }
