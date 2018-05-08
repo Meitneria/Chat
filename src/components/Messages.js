@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 export default class Messages extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ export default class Messages extends Component {
                                 key={data._id}
                                 className={`message-container ${data.sender === user.name && 'right'}`}
                             >
-                                <div className="time">{data.date}</div>
+                                <div className="time">{moment.duration(moment(data.date).diff(moment())).humanize(true)}</div>
                                 <div className="data">
                                     <div className="message">{data.message}</div>
                                     <div className="name">{data.sender}</div>
@@ -47,7 +48,7 @@ export default class Messages extends Component {
                                     key={mes.id}
                                     className={`message-container ${mes.sender === user.name && 'right'}`}
                                 >
-                                    <div className="time">{mes.time}</div>
+                                    <div className="time">{moment.duration(moment(mes.date).diff(moment())).humanize(true)}</div>
                                     <div className="data">
                                         <div className="message">{mes.message}</div>
                                         <div className="name">{mes.sender}</div>

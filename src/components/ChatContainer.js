@@ -127,6 +127,7 @@ export default class ChatContainer extends Component {
                                         data = {this.props.data}
                                     />
                                     <MessageInput
+                                        messages={activeChat.messages}
                                         sendMessage={
                                             (message)=>{
                                                 this.sendMessage(activeChat.id, message)
