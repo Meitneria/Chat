@@ -3,7 +3,7 @@ import SideBar from './Sidebar'
 import ChatHeading from './ChatHeading'
 import Messages from './Messages'
 import MessageInput from './MessageInput'
-import { COMMUNITY_CHAT, MESSAGE_SENT, MESSAGE_RECIEVED, TYPING, PRIVATE_MESSAGE } from '../Events'
+import { COMMUNITY_CHAT, MESSAGE_SENT, MESSAGE_RECEIVED, TYPING, PRIVATE_MESSAGE } from '../Events'
 
 
 export default class ChatContainer extends Component {
@@ -40,7 +40,7 @@ export default class ChatContainer extends Component {
         const { chats } = this.state;
         const newChats = reset ? [chat] : [...chats, chat];
         this.setState({chats:newChats, activeChat:reset ? chat : this.state.activeChat});
-        const messageEvent = `${MESSAGE_RECIEVED}-${chat.id}`;
+        const messageEvent = `${MESSAGE_RECEIVED}-${chat.id}`;
         const typingEvent = `${TYPING}-${chat.id}`;
         socket.on(typingEvent, this.updateTypingInChat(chat.id));
         socket.on(messageEvent, this.addMessageToChat(chat.id))

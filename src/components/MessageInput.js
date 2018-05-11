@@ -18,7 +18,7 @@ export default class MessageInput extends Component {
         const {message, sender} = this.state;
 
 
-        fetch('http://localhost:3231/api/messages', {
+        fetch('http://localhost:3231/messages', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({message, sender}),

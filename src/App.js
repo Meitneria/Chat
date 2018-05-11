@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div className="container">
         <Layout title="Chat"
-                url='http://localhost:3231/api/messages'
+                url='http://localhost:3231/messages'
                 pollInterval={2000}/>
       </div>
     );

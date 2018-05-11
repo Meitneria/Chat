@@ -19,14 +19,11 @@ class Layout extends Component {
 
     loadMessagesFromServer(){
         axios.get(this.props.url)
-            .then(res => {
-                this.setState({ data: res.data });
-            })
+            .then(res => this.setState({ data: res.data }));
     }
 
     componentDidMount() {
         this.loadMessagesFromServer();
-        setInterval(this.loadMessageFromServer, this.props.pollInterval);
     }
 
     componentWillMount(){
@@ -62,7 +59,6 @@ class Layout extends Component {
                                        user={user}
                                        logout={this.logout}
                                        data = {data}
-                                       onMessageSubmit = {this.handleMessageSubmit}
                         />
                 }
             </div>
