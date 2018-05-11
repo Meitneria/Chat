@@ -14,28 +14,16 @@ class Layout extends Component {
             user: null,
             data:[]
         };
-
-        this.loadMessagesFromServer = this.loadMessagesFromServer.bind(this);
-        this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
+    this.loadMessagesFromServer = this.loadMessagesFromServer.bind(this);
     }
 
     loadMessagesFromServer(){
-
         axios.get(this.props.url)
             .then(res => {
                 this.setState({ data: res.data });
             })
     }
-    handleMessageSubmit(message) {
-        let messages = this.state.data;
-        let newMessages = messages.concat([message]);
-        this.setState({ data: newMessages });
-        axios.post(this.props.url, message)
-            .catch(err => {
-                console.error(err);
-                this.setState({ data: messages });
-            });
-    }
+
     componentDidMount() {
         this.loadMessagesFromServer();
         setInterval(this.loadMessageFromServer, this.props.pollInterval);
@@ -47,9 +35,6 @@ class Layout extends Component {
 
     initSocket = () => {
         const socket = io(socketUrl);
-        socket.on('connect', ()=>{
-            console.log("Connected");
-        });
         this.setState({socket});
     };
 
@@ -66,7 +51,6 @@ class Layout extends Component {
     };
 
     render() {
-
         const {socket, user, data} = this.state;
         return (
             <div className="container">
@@ -78,11 +62,9 @@ class Layout extends Component {
                                        user={user}
                                        logout={this.logout}
                                        data = {data}
-                                       onMessageSubmit = {this.handleMessageSubmit}/>
+                                       onMessageSubmit = {this.handleMessageSubmit}
+                        />
                 }
-
-
-
             </div>
         );
     }

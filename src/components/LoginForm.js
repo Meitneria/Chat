@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 import {VERIFY_USER} from '../Events';
 
 class LoginForm extends Component {
@@ -18,24 +19,36 @@ class LoginForm extends Component {
             this.props.setUser(user);
             this.setError("")
         }
-};
+    };
+
+    setError = (error) =>{
+        this.setState({error})
+    };
 
     handleSubmit = (e) =>{
         e.preventDefault();
         const {socket} = this.props;
         const {nickname} = this.state;
         socket.emit(VERIFY_USER, nickname, this.setUser);
-
+        axios.post('/',{
+            name:nickname
+        })
+        .then(response => {
+            console.log(response);
+            if(response.data){
+                console.log('successfull signup');
+                //this.setUser;
+            }
+            else {
+                console.log("signup error");
+            }
+        })
     };
 
     handleChange = (e) =>{
         this.setState({nickname:e.target.value})
-
     };
 
-    setError = (error) =>{
-        this.setState({error})
-    };
 
     render() {
         const{nickname, error} = this.state;
@@ -46,7 +59,7 @@ class LoginForm extends Component {
                         <h2>Got a nickname?</h2>
                     </label>
                     <input
-                        ref={(input) => {this.textInput = input}}
+                        ref={(input) => {this.textInput = input}} //??
                         type="text"
                         id = "nickname"
                         value={nickname}
@@ -55,7 +68,6 @@ class LoginForm extends Component {
                         />
                     <div className="error">{error ? error:null}</div>
                 </form>
-
             </div>
         );
     }

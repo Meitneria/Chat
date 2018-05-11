@@ -1,22 +1,16 @@
 const io = require('./index.js').io;
 
-const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED,
-    LOGOUT, COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT,
-    TYPING,PRIVATE_MESSAGE  } = require('../Events');
+const {VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED, LOGOUT, COMMUNITY_CHAT,
+    MESSAGE_RECIEVED, MESSAGE_SENT, TYPING,PRIVATE_MESSAGE} = require('../Events');
 
 const { createUser, createMessage, createChat } = require('../Factories');
 
-let connectedUsers = { };
-
+let connectedUsers = {};
 let communityChat = createChat();
 
 module.exports = function(socket){
-
-    // console.log('\x1bc'); //clears console
     console.log("Socket Id:" + socket.id);
-
     let sendMessageToChatFromUser;
-
     let sendTypingFromUser;
 
     //Verify Username
@@ -38,27 +32,22 @@ module.exports = function(socket){
         sendTypingFromUser = sendTypingToChat(user.name);
 
         io.emit(USER_CONNECTED, connectedUsers);
-        console.log(connectedUsers);
-
     });
 
     //User disconnects
     socket.on('disconnect', ()=>{
-        if("user" in socket){
+        if("user" in socket){     //??
             connectedUsers = removeUser(connectedUsers, socket.user.name);
-
             io.emit(USER_DISCONNECTED, connectedUsers);
             console.log("Disconnect", connectedUsers);
         }
     });
-
 
     //User logsout
     socket.on(LOGOUT, ()=>{
         connectedUsers = removeUser(connectedUsers, socket.user.name);
         io.emit(USER_DISCONNECTED, connectedUsers);
         console.log("Disconnect", connectedUsers);
-
     });
 
     //Get Community Chat
@@ -80,10 +69,8 @@ module.exports = function(socket){
            const recieverSocket = connectedUsers[reciever].socketId;
            socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat);
            socket.emit(PRIVATE_MESSAGE, newChat);
-
        }
     });
-
 };
 
 function sendTypingToChat(user){

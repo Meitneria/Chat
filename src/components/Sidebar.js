@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import FAChevronDown from 'react-icons/lib/md/keyboard-arrow-down'
-import FAMenu from 'react-icons/lib/fa/list-ul'
 import FASearch from 'react-icons/lib/fa/search'
 import MdEject from 'react-icons/lib/md/eject'
 
 export default class SideBar extends Component{
     constructor(props) {
         super(props);
-
         this.state = {
             reciever:""
         };
@@ -26,9 +23,9 @@ export default class SideBar extends Component{
         return (
             <div id="side-bar">
                 <div className="heading">
-                    <div className="app-name">Our Cool Chat <FAChevronDown /></div>
+                    <div className="app-name">Our Cool Chat </div>
                     <div className="menu">
-                        <FAMenu />
+
                     </div>
                 </div>
                 <form onSubmit={this.handleSubmit} className="search">
@@ -39,7 +36,6 @@ export default class SideBar extends Component{
                         value={reciever}
                         onChange={(e)=>{this.setState({reciever:e.target.value})}}
                     />
-                    <div className="plus"></div>
 
                 </form>
                 <div
@@ -62,7 +58,6 @@ export default class SideBar extends Component{
                                         className={`user ${classNames}`}
                                         onClick={ ()=>{ setActiveChat(chat) } }
                                     >
-                                        <div className="user-photo">{chatSideName[0].toUpperCase()}</div>
                                         <div className="user-info">
                                             <div className="name">{chatSideName}</div>
                                             {lastMessage && <div className="last-message">{lastMessage.message}</div>}

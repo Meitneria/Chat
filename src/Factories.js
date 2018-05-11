@@ -8,10 +8,9 @@ const createUser = ({name = "", socketId = null} = {})=>(
     }
 );
 
-const createMessage = ({message = "", sender = ""} = { }) =>(
+const createMessage = ({message = "", sender = ""} = {}) =>(
     {
         id:uuidv4(),
-      //  time:getTime(new Date(Date.now())),
         message,
         sender
     }
@@ -26,10 +25,6 @@ const createChat = ({messages = [], name = "Community", users = []} = {})=>(
         typingUsers:[]
     }
 );
-
-const getTime = (date) =>{
-    return `${date.getHours()}:${("0"+date.getMinutes()).slice(-2)}`
-};
 
 module.exports = {
     createMessage,

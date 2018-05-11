@@ -8,22 +8,14 @@ export default class MessageInput extends Component {
         this.state = {
             message: "",
             isTyping: false,
-            sender: ""
+            sender: this.props.user.name
         };
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
         this.sendMessage();
-        this.state.sender = this.props.user.name;
         const {message, sender} = this.state;
-
-        //TODO messages - array of objects
-        const messages = this.props.messages;
-        let time = messages.map((mes) => {
-            return mes.time
-        });
-    //    console.log(messages[0]);
 
 
         fetch('http://localhost:3231/api/messages', {
